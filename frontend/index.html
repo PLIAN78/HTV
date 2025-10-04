@@ -17,20 +17,36 @@
         <input type="file" id="videoFile" accept="video/*" hidden />
       </label>
       <p id="fileName">No file chosen</p>
+
+      <!-- Video preview -->
+      <video id="videoPreview" controls hidden autoplay muted></video>
     </form>
   </div>
 
   <script>
     const input = document.getElementById('videoFile');
     const fileName = document.getElementById('fileName');
+    const videoPreview = document.getElementById('videoPreview');
 
     input.addEventListener('change', (event) => {
       const file = event.target.files[0];
       if (file) {
         fileName.textContent = file.name;
-        console.log('Selected file:', file.name);
+
+        // Create a local URL for the video
+        const fileURL = URL.createObjectURL(file);
+        videoPreview.src = fileURL;
+        videoPreview.hidden = false;
+
+        // Wait for metadata to load before enabling playback
+        videoPreview.addEventListener('loadedmetadata', () => {
+          videoPreview.controls = true; // ensure controls are visible
+          videoPreview.pause(); // make sure it starts paused
+        }, { once: true });
       } else {
         fileName.textContent = 'No file chosen';
+        videoPreview.hidden = true;
+        videoPreview.src = '';
       }
     });
   </script>
