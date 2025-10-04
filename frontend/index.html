@@ -19,7 +19,11 @@
       <p id="fileName">No file chosen</p>
 
       <!-- Video preview -->
-      <video id="videoPreview" controls hidden autoplay muted></video>
+      <video id="videoPreview" controls hidden playsinline></video>
+
+      <!-- Confirm button -->
+      <button type="button" id="confirmBtn" class="confirm-btn">Confirm Video</button>
+      <p id="confirmationMsg" style="color: #0f0; margin-top: 0.5rem;"></p>
     </form>
   </div>
 
@@ -27,28 +31,58 @@
     const input = document.getElementById('videoFile');
     const fileName = document.getElementById('fileName');
     const videoPreview = document.getElementById('videoPreview');
+    const confirmBtn = document.getElementById('confirmBtn');
+    const confirmationMsg = document.getElementById('confirmationMsg');
+
+    // Cached video file
+    let cachedVideoFile = null;
 
     input.addEventListener('change', (event) => {
       const file = event.target.files[0];
       if (file) {
         fileName.textContent = file.name;
 
-        // Create a local URL for the video
+        // Display video preview
         const fileURL = URL.createObjectURL(file);
         videoPreview.src = fileURL;
         videoPreview.hidden = false;
 
-        // Wait for metadata to load before enabling playback
         videoPreview.addEventListener('loadedmetadata', () => {
-          videoPreview.controls = true; // ensure controls are visible
-          videoPreview.pause(); // make sure it starts paused
+          videoPreview.pause();
         }, { once: true });
+
+        confirmationMsg.textContent = '';
       } else {
         fileName.textContent = 'No file chosen';
         videoPreview.hidden = true;
         videoPreview.src = '';
       }
     });
+
+    // Confirm button click
+    confirmBtn.addEventListener('click', () => {
+      if (videoPreview.src && !videoPreview.hidden) {
+        // Cache the same file as currently in preview
+        cachedVideoFile = input.files[0] || null;
+        if (cachedVideoFile) {
+          sessionStorage.setItem('videoName', cachedVideoFile.name);
+          confirmationMsg.style.color = '#0f0';
+          confirmationMsg.textContent = 'Video confirmed, processing now!';
+          console.log('Cached video:', cachedVideoFile);
+        } else {
+          confirmationMsg.style.color = '#f00';
+          confirmationMsg.textContent = 'No video input';
+        }
+      } else {
+        confirmationMsg.style.color = '#f00';
+        confirmationMsg.textContent = 'No video input';
+      }
+    });
+
+    // Later, cachedVideoFile can be sent to backend:
+    // const formData = new FormData();
+    // formData.append('video', cachedVideoFile);
+    // fetch('/upload', { method: 'POST', body: formData });
   </script>
 </body>
 </html>
