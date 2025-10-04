@@ -73,3 +73,180 @@ h1 {
   transform: translateY(0);
   opacity: 0.8;
 }
+
+/* Reset & font */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  height: 100vh;
+  /* Ice rink background */
+  background-color: #e8f3ff; /* fallback ice color */
+  background-image:
+    /* soft ice vignette */
+    radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.75), rgba(210, 234, 255, 0.35) 40%, rgba(170, 210, 245, 0.18) 70%, rgba(150, 200, 240, 0.12) 100%),
+    /* blue line (25%) - WAY thicker */
+    linear-gradient(to bottom, transparent calc(25% - 16px), rgba(0, 102, 204, 0.98) 0, rgba(0, 102, 204, 0.98) calc(25% + 16px), transparent 0),
+    /* center red line (50%) - WAY thicker */
+    linear-gradient(to bottom, transparent calc(50% - 16px), rgba(204, 0, 0, 0.98) 0, rgba(204, 0, 0, 0.98) calc(50% + 16px), transparent 0),
+    /* blue line (75%) - WAY thicker */
+    linear-gradient(to bottom, transparent calc(75% - 16px), rgba(0, 102, 204, 0.98) 0, rgba(0, 102, 204, 0.98) calc(75% + 16px), transparent 0),
+    /* subtle vertical ice sheen */
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0.04) 30%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0) 100%),
+    /* base ice gradient */
+    linear-gradient(to bottom, #e8f3ff, #cfe8ff);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  background-attachment: fixed;
+
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  overflow: hidden; /* contain overlays */
+}
+
+.container {
+  background-color: #111;
+  padding: 3rem 4rem;
+  border-radius: 20px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+  text-align: center;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+  z-index: 1; /* above rink overlays */
+}
+
+h1 {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  letter-spacing: 0.5px;
+  color: #fff;
+}
+
+/* Boards and kickplate at top/bottom */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    /* white boards */
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0, rgba(255, 255, 255, 0.95) 4.5vh, rgba(255, 255, 255, 0) 8vh),
+    linear-gradient(to top, rgba(255, 255, 255, 0.95) 0, rgba(255, 255, 255, 0.95) 4.5vh, rgba(255, 255, 255, 0) 8vh),
+    /* yellow kickplate */
+    linear-gradient(to bottom, rgba(255, 209, 0, 0.95) 0, rgba(255, 209, 0, 0.95) 0.7vh, rgba(255, 209, 0, 0) 1vh),
+    linear-gradient(to top, rgba(255, 209, 0, 0.95) 0, rgba(255, 209, 0, 0.95) 0.7vh, rgba(255, 209, 0, 0) 1vh);
+  background-repeat: no-repeat;
+  background-size: 100% 8vh, 100% 8vh, 100% 1vh, 100% 1vh;
+  background-position: top left, bottom left, top left, bottom left;
+  z-index: 0;
+}
+
+/* Animated puck moving around the rink */
+body::after {
+  content: "";
+  position: absolute;
+  top: 8vh; /* starting anchor */
+  left: 8vw;
+  width: clamp(20px, 3.6vw, 40px);
+  height: clamp(20px, 3.6vw, 40px);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+
+  /* Puck appearance: dark body with subtle highlight and rim */
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,0.18) 0 35%, rgba(255,255,255,0) 55%),
+    radial-gradient(circle at 60% 70%, rgba(0,0,0,0.35) 0 55%, rgba(0,0,0,0) 70%),
+    #0a0a0a;
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.35), /* drop shadow on ice */
+    0 1px 0 rgba(255, 255, 255, 0.08) inset, /* slight top rim */
+    0 -2px 0 rgba(0, 0, 0, 0.6) inset; /* bottom rim */
+  transform: translate(0, 0) scale(1, 0.94);
+  animation: puckMove 16s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+}
+
+@keyframes puckMove {
+  0% {
+    transform: translate(0, 0) scale(1, 0.94) rotate(0.0001deg);
+  }
+  18% {
+    transform: translate(65vw, 6vh) scale(1, 0.94) rotate(8deg);
+  }
+  36% {
+    transform: translate(70vw, 68vh) scale(1, 0.94) rotate(16deg);
+  }
+  54% {
+    transform: translate(12vw, 58vh) scale(1, 0.94) rotate(-8deg);
+  }
+  72% {
+    transform: translate(6vw, 18vh) scale(1, 0.94) rotate(-14deg);
+  }
+  90% {
+    transform: translate(50vw, 34vh) scale(1, 0.94) rotate(6deg);
+  }
+  100% {
+    transform: translate(0, 0) scale(1, 0.94) rotate(0.0001deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body::after {
+    animation: none;
+  }
+}
+
+/* Upload button */
+.upload-btn {
+  display: inline-block;
+  background-color: #fff;
+  color: #000;
+  padding: 0.8rem 1.6rem;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.upload-btn:hover {
+  background-color: #000;
+  color: #fff;
+  border: 2px solid #fff;
+  transform: translateY(-2px);
+}
+
+/* File name display */
+#fileName {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #aaa;
+  word-wrap: break-word;
+}
+
+/* Video preview */
+#videoPreview {
+  margin-top: 1.5rem;
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  background-color: #000;
+}
+
+/* Smooth animation for clicking */
+.upload-btn:active {
+  transform: translateY(0);
+  opacity: 0.8;
+}
+
+
+
+
+
