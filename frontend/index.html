@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hockey Gaming - Video Upload</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+  <div class="container">
+    <h1>Upload Your Hockey Video</h1>
+    
+    <form id="uploadForm">
+      <label for="videoFile" class="upload-btn">
+        Choose Video
+        <input type="file" id="videoFile" accept="video/*" hidden />
+      </label>
+      <p id="fileName">No file chosen</p>
+    </form>
+  </div>
+
+  <script>
+    const input = document.getElementById('videoFile');
+    const fileName = document.getElementById('fileName');
+
+    input.addEventListener('change', (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        fileName.textContent = file.name;
+        console.log('Selected file:', file.name);
+      } else {
+        fileName.textContent = 'No file chosen';
+      }
+    });
+  </script>
+</body>
+</html>
