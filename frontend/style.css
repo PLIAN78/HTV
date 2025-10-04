@@ -13,16 +13,12 @@ body {
   background-image:
     /* soft ice vignette */
     radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.75), rgba(210, 234, 255, 0.35) 40%, rgba(170, 210, 245, 0.18) 70%, rgba(150, 200, 240, 0.12) 100%),
-    /* goal line (top ~10%) */
-    linear-gradient(to bottom, transparent calc(10% - 1.5px), rgba(204, 0, 0, 0.8) 0, rgba(204, 0, 0, 0.8) calc(10% + 1.5px), transparent 0),
-    /* blue line (25%) */
-    linear-gradient(to bottom, transparent calc(25% - 2px), rgba(0, 102, 204, 0.85) 0, rgba(0, 102, 204, 0.85) calc(25% + 2px), transparent 0),
-    /* center red line (50%) */
-    linear-gradient(to bottom, transparent calc(50% - 1.5px), rgba(204, 0, 0, 0.9) 0, rgba(204, 0, 0, 0.9) calc(50% + 1.5px), transparent 0),
-    /* blue line (75%) */
-    linear-gradient(to bottom, transparent calc(75% - 2px), rgba(0, 102, 204, 0.85) 0, rgba(0, 102, 204, 0.85) calc(75% + 2px), transparent 0),
-    /* goal line (bottom ~90%) */
-    linear-gradient(to bottom, transparent calc(90% - 1.5px), rgba(204, 0, 0, 0.8) 0, rgba(204, 0, 0, 0.8) calc(90% + 1.5px), transparent 0),
+    /* blue line (25%) - thicker */
+    linear-gradient(to bottom, transparent calc(25% - 4px), rgba(0, 102, 204, 0.95) 0, rgba(0, 102, 204, 0.95) calc(25% + 4px), transparent 0),
+    /* center red line (50%) - thicker */
+    linear-gradient(to bottom, transparent calc(50% - 4px), rgba(204, 0, 0, 0.95) 0, rgba(204, 0, 0, 0.95) calc(50% + 4px), transparent 0),
+    /* blue line (75%) - thicker */
+    linear-gradient(to bottom, transparent calc(75% - 4px), rgba(0, 102, 204, 0.95) 0, rgba(0, 102, 204, 0.95) calc(75% + 4px), transparent 0),
     /* subtle vertical ice sheen */
     linear-gradient(90deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0) 15%, rgba(255, 255, 255, 0.04) 30%, rgba(255, 255, 255, 0) 45%, rgba(255, 255, 255, 0.03) 60%, rgba(255, 255, 255, 0) 100%),
     /* base ice gradient */
@@ -84,27 +80,28 @@ body::after {
   inset: -10% -10% -10% -10%;
   pointer-events: none;
   background-image:
-    radial-gradient(rgba(255, 255, 255, 0.08) 1px, rgba(255, 255, 255, 0) 1.4px),
-    radial-gradient(rgba(255, 255, 255, 0.06) 1px, rgba(255, 255, 255, 0) 1.5px),
-    radial-gradient(rgba(255, 255, 255, 0.05) 1px, rgba(255, 255, 255, 0) 1.6px);
-  background-size: 3px 3px, 2px 2px, 1.6px 1.6px;
-  background-position: 0 0, 50px 40px, -80px -60px;
-  animation: snowDrift 28s linear infinite;
+    radial-gradient(rgba(255, 255, 255, 0.12) 1.2px, rgba(255, 255, 255, 0) 1.8px),
+    radial-gradient(rgba(255, 255, 255, 0.10) 1px, rgba(255, 255, 255, 0) 1.6px),
+    radial-gradient(rgba(255, 255, 255, 0.08) 0.9px, rgba(255, 255, 255, 0) 1.5px),
+    linear-gradient(120deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.14) 50%, rgba(255,255,255,0) 60%);
+  background-size: 3.2px 3.2px, 2.2px 2.2px, 1.8px 1.8px, 200% 200%;
+  background-position: 0 0, 60px 50px, -100px -80px, -160% -160%;
+  animation: snowDrift 18s linear infinite;
   z-index: 0;
 }
 
 @keyframes snowDrift {
   0% {
-    transform: translateY(-3%);
-    background-position: 0 0, 50px 40px, -80px -60px;
+    transform: translateY(-8%) rotate(0.0001deg);
+    background-position: 0 0, 60px 50px, -100px -80px, -160% -160%;
   }
   50% {
-    transform: translateY(3%);
-    background-position: 0 120px, 30px 180px, -100px 100px;
+    transform: translateY(8%) rotate(0.0001deg);
+    background-position: 0 220px, 40px 260px, -140px 140px, 0% 0%;
   }
   100% {
-    transform: translateY(-3%);
-    background-position: 0 240px, 0 320px, -140px 220px;
+    transform: translateY(-8%) rotate(0.0001deg);
+    background-position: 0 440px, -20px 520px, -200px 260px, 160% 160%;
   }
 }
 
