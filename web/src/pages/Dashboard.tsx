@@ -1,6 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card'
 import { Table, THead, TBody, TR, TH, TD } from '../components/ui/table'
-import { AlertTriangle, Activity, BarChart3, Clock } from 'lucide-react'
 
 const mockSummary = {
   gamesAnalyzed: 12,
@@ -22,7 +21,7 @@ export default function Dashboard() {
         <Card>
           <CardHeader className="flex items-center justify-between">
             <CardTitle>Games Analyzed</CardTitle>
-            <Activity size={16} className="text-accent" />
+            <span className="h-2.5 w-2.5 rounded-full bg-accent" aria-hidden />
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-semibold">{mockSummary.gamesAnalyzed}</div>
@@ -31,7 +30,7 @@ export default function Dashboard() {
         <Card>
           <CardHeader className="flex items-center justify-between">
             <CardTitle>Mistakes Found</CardTitle>
-            <AlertTriangle size={16} className="text-accent" />
+            <span className="h-2.5 w-2.5 rounded-full bg-accent" aria-hidden />
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-semibold">{mockSummary.mistakesFound}</div>
@@ -40,7 +39,7 @@ export default function Dashboard() {
         <Card>
           <CardHeader className="flex items-center justify-between">
             <CardTitle>Accuracy</CardTitle>
-            <BarChart3 size={16} className="text-accent" />
+            <span className="h-2.5 w-2.5 rounded-full bg-accent" aria-hidden />
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-semibold">{mockSummary.accuracy}%</div>
@@ -49,7 +48,7 @@ export default function Dashboard() {
         <Card>
           <CardHeader className="flex items-center justify-between">
             <CardTitle>Last Upload</CardTitle>
-            <Clock size={16} className="text-accent" />
+            <span className="h-2.5 w-2.5 rounded-full bg-accent" aria-hidden />
           </CardHeader>
           <CardContent>
             <div className="text-lg">{mockSummary.lastUpload}</div>
