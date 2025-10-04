@@ -77,25 +77,28 @@ body::before {
 body::after {
   content: "";
   position: absolute;
-  inset: -10% -10% -10% -10%;
+  inset: 0; /* align overlay with viewport for accurate edge fading */
   pointer-events: none;
   background-image:
-    radial-gradient(rgba(255, 255, 255, 0.10) 1.2px, rgba(255, 255, 255, 0) 2px),
-    radial-gradient(rgba(255, 255, 255, 0.08) 1px, rgba(255, 255, 255, 0) 1.8px),
-    radial-gradient(rgba(255, 255, 255, 0.06) 0.8px, rgba(255, 255, 255, 0) 1.6px),
-    linear-gradient(120deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.10) 50%, rgba(255,255,255,0) 60%);
-  background-size: 3px 3px, 2.2px 2.2px, 1.8px 1.8px, 300% 300%;
-  background-position: 0 0, 80px 60px, -140px -100px, -160% -160%;
-  animation: snowDrift 20s ease-in-out infinite;
+    radial-gradient(rgba(255, 255, 255, 0.13) 1.2px, rgba(255, 255, 255, 0) 2px),
+    radial-gradient(rgba(255, 255, 255, 0.11) 1px, rgba(255, 255, 255, 0) 1.8px),
+    radial-gradient(rgba(255, 255, 255, 0.09) 0.8px, rgba(255, 255, 255, 0) 1.6px),
+    linear-gradient(120deg, rgba(255,255,255,0) 47%, rgba(255,255,255,0.14) 50%, rgba(255,255,255,0) 53%);
+  background-size: 3px 3px, 2.2px 2.2px, 1.8px 1.8px, 260% 260%;
+  background-position: 0 0, 80px 60px, -140px -100px, -130% -130%;
+  animation: snowDrift 18s ease-in-out infinite;
   z-index: 0;
   will-change: transform, background-position;
-  opacity: 0.35; /* soften overall effect */
+  opacity: 0.42; /* slightly stronger but still soft */
+  /* Fade overlay near left/right edges to prevent solid side bands */
+  -webkit-mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
 }
 
 @keyframes snowDrift {
   0% {
     transform: translate(-6%, -8%) rotate(0.0001deg);
-    background-position: 0 0, 80px 60px, -140px -100px, -160% -160%;
+    background-position: 0 0, 80px 60px, -140px -100px, -130% -130%;
   }
   50% {
     transform: translate(6%, 8%) rotate(0.0001deg);
@@ -103,7 +106,7 @@ body::after {
   }
   100% {
     transform: translate(-6%, -8%) rotate(0.0001deg);
-    background-position: 0 480px, 0 560px, -220px 320px, 160% 160%;
+    background-position: 0 480px, 0 560px, -220px 320px, 130% 130%;
   }
 }
 
