@@ -1,0 +1,14 @@
+[
+  {
+    "section": "Breakout",
+    "frames": ["frame_0.jpg", "frame_5.jpg", "frame_10.jpg"]
+  },
+  {
+    "section": "Zone Entry",
+    "frames": ["frame_15.jpg", "frame_20.jpg"]
+  },
+  {
+    "section": "Scoring Chance",
+    "frames": ["frame_25.jpg", "frame_30.jpg", "frame_35.jpg"]
+  }
+]
