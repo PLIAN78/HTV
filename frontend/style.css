@@ -73,40 +73,52 @@ body::before {
   z-index: 0;
 }
 
-/* Subtle animated frost/snow noise */
+/* Animated puck moving around the rink */
 body::after {
   content: "";
   position: absolute;
-  inset: 0; /* align overlay with viewport for accurate edge fading */
+  top: 8vh; /* starting anchor */
+  left: 8vw;
+  width: clamp(20px, 3.6vw, 40px);
+  height: clamp(20px, 3.6vw, 40px);
+  border-radius: 50%;
   pointer-events: none;
-  background-image:
-    radial-gradient(rgba(255, 255, 255, 0.13) 1.2px, rgba(255, 255, 255, 0) 2px),
-    radial-gradient(rgba(255, 255, 255, 0.11) 1px, rgba(255, 255, 255, 0) 1.8px),
-    radial-gradient(rgba(255, 255, 255, 0.09) 0.8px, rgba(255, 255, 255, 0) 1.6px),
-    linear-gradient(120deg, rgba(255,255,255,0) 47%, rgba(255,255,255,0.14) 50%, rgba(255,255,255,0) 53%);
-  background-size: 3px 3px, 2.2px 2.2px, 1.8px 1.8px, 260% 260%;
-  background-position: 0 0, 80px 60px, -140px -100px, -130% -130%;
-  animation: snowDrift 18s ease-in-out infinite;
   z-index: 0;
-  will-change: transform, background-position;
-  opacity: 0.42; /* slightly stronger but still soft */
-  /* Fade overlay near left/right edges to prevent solid side bands */
-  -webkit-mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
-  mask-image: linear-gradient(to right, transparent 0, black 6%, black 94%, transparent 100%);
+
+  /* Puck appearance: dark body with subtle highlight and rim */
+  background:
+    radial-gradient(circle at 35% 30%, rgba(255,255,255,0.18) 0 35%, rgba(255,255,255,0) 55%),
+    radial-gradient(circle at 60% 70%, rgba(0,0,0,0.35) 0 55%, rgba(0,0,0,0) 70%),
+    #0a0a0a;
+  box-shadow:
+    0 10px 22px rgba(0, 0, 0, 0.35), /* drop shadow on ice */
+    0 1px 0 rgba(255, 255, 255, 0.08) inset, /* slight top rim */
+    0 -2px 0 rgba(0, 0, 0, 0.6) inset; /* bottom rim */
+  transform: translate(0, 0) scale(1, 0.94);
+  animation: puckMove 16s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
 }
 
-@keyframes snowDrift {
+@keyframes puckMove {
   0% {
-    transform: translate(-6%, -8%) rotate(0.0001deg);
-    background-position: 0 0, 80px 60px, -140px -100px, -130% -130%;
+    transform: translate(0, 0) scale(1, 0.94) rotate(0.0001deg);
   }
-  50% {
-    transform: translate(6%, 8%) rotate(0.0001deg);
-    background-position: 0 240px, 30px 280px, -180px 160px, 0% 0%;
+  18% {
+    transform: translate(65vw, 6vh) scale(1, 0.94) rotate(8deg);
+  }
+  36% {
+    transform: translate(70vw, 68vh) scale(1, 0.94) rotate(16deg);
+  }
+  54% {
+    transform: translate(12vw, 58vh) scale(1, 0.94) rotate(-8deg);
+  }
+  72% {
+    transform: translate(6vw, 18vh) scale(1, 0.94) rotate(-14deg);
+  }
+  90% {
+    transform: translate(50vw, 34vh) scale(1, 0.94) rotate(6deg);
   }
   100% {
-    transform: translate(-6%, -8%) rotate(0.0001deg);
-    background-position: 0 480px, 0 560px, -220px 320px, 130% 130%;
+    transform: translate(0, 0) scale(1, 0.94) rotate(0.0001deg);
   }
 }
 
