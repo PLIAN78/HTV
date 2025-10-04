@@ -80,30 +80,30 @@ body::after {
   inset: -10% -10% -10% -10%;
   pointer-events: none;
   background-image:
-    radial-gradient(rgba(255, 255, 255, 0.18) 1.6px, rgba(255, 255, 255, 0) 2.2px),
-    radial-gradient(rgba(255, 255, 255, 0.16) 1.3px, rgba(255, 255, 255, 0) 2px),
-    radial-gradient(rgba(255, 255, 255, 0.12) 1px, rgba(255, 255, 255, 0) 1.8px),
-    repeating-linear-gradient(120deg, rgba(255,255,255,0.06) 0 14px, rgba(255,255,255,0) 14px 28px),
-    linear-gradient(120deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.22) 50%, rgba(255,255,255,0) 60%);
-  background-size: 4px 4px, 3px 3px, 2.2px 2.2px, 60px 60px, 240% 240%;
-  background-position: 0 0, 80px 60px, -140px -100px, -240px -320px, -180% -180%;
-  animation: snowDrift 12s ease-in-out infinite;
+    radial-gradient(rgba(255, 255, 255, 0.10) 1.2px, rgba(255, 255, 255, 0) 2px),
+    radial-gradient(rgba(255, 255, 255, 0.08) 1px, rgba(255, 255, 255, 0) 1.8px),
+    radial-gradient(rgba(255, 255, 255, 0.06) 0.8px, rgba(255, 255, 255, 0) 1.6px),
+    linear-gradient(120deg, rgba(255,255,255,0) 40%, rgba(255,255,255,0.10) 50%, rgba(255,255,255,0) 60%);
+  background-size: 3px 3px, 2.2px 2.2px, 1.8px 1.8px, 300% 300%;
+  background-position: 0 0, 80px 60px, -140px -100px, -160% -160%;
+  animation: snowDrift 20s ease-in-out infinite;
   z-index: 0;
   will-change: transform, background-position;
+  opacity: 0.35; /* soften overall effect */
 }
 
 @keyframes snowDrift {
   0% {
-    transform: translate(-10%, -14%) rotate(0.0001deg);
-    background-position: 0 0, 80px 60px, -140px -100px, -240px -320px, -180% -180%;
+    transform: translate(-6%, -8%) rotate(0.0001deg);
+    background-position: 0 0, 80px 60px, -140px -100px, -160% -160%;
   }
   50% {
-    transform: translate(10%, 14%) rotate(0.0001deg);
-    background-position: 0 360px, 40px 420px, -180px 220px, 0 0, 0% 0%;
+    transform: translate(6%, 8%) rotate(0.0001deg);
+    background-position: 0 240px, 30px 280px, -180px 160px, 0% 0%;
   }
   100% {
-    transform: translate(-12%, -16%) rotate(0.0001deg);
-    background-position: 0 720px, -20px 840px, -240px 440px, 240px 320px, 180% 180%;
+    transform: translate(-6%, -8%) rotate(0.0001deg);
+    background-position: 0 480px, 0 560px, -220px 320px, 160% 160%;
   }
 }
 
