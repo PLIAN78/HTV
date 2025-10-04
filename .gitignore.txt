@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+transcriptions/
+frames/
+hockey_clip.mp4
