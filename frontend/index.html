@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hockey Gaming - Video Upload</title>
   <style>
-    /* Reset & font */
     * {
       margin: 0;
       padding: 0;
@@ -15,7 +14,6 @@
 
     body {
       min-height: 100vh;
-      /* Ice rink background */
       background-color: #e8f3ff;
       background-image:
         radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.75), rgba(210, 234, 255, 0.35) 40%, rgba(170, 210, 245, 0.18) 70%, rgba(150, 200, 240, 0.12) 100%),
@@ -36,7 +34,6 @@
       overflow-x: hidden;
     }
 
-    /* Boards and kickplate */
     body::before {
       content: "";
       position: fixed;
@@ -53,7 +50,6 @@
       z-index: 0;
     }
 
-    /* Animated puck */
     body::after {
       content: "";
       position: fixed;
@@ -177,14 +173,64 @@
       border-radius: 20px;
       box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
       width: 90%;
-      max-width: 800px;
+      max-width: 1200px;
       position: relative;
       z-index: 1;
       margin-top: 20px;
-      text-align: left;
     }
 
-    .results-container h2 {
+    .video-analysis-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 30px;
+    }
+
+    .video-player-container {
+      background: #000;
+      border-radius: 10px;
+      padding: 15px;
+    }
+
+    .video-player-container video {
+      width: 100%;
+      border-radius: 8px;
+    }
+
+    .frame-analysis-container {
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 20px;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .frame-analysis-container h3 {
+      color: #0ff;
+      margin-bottom: 10px;
+      font-size: 1.2rem;
+    }
+
+    .frame-time {
+      color: #0f0;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .frame-analysis-text {
+      color: #ddd;
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+
+    .holistic-section {
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+
+    .holistic-section h2 {
       color: #fff;
       margin-bottom: 1rem;
       border-bottom: 2px solid #0f0;
@@ -205,6 +251,17 @@
     @keyframes pulse {
       0%, 100% { opacity: 1; }
       50% { opacity: 0.5; }
+    }
+
+    .no-frame-data {
+      color: #888;
+      font-style: italic;
+    }
+
+    @media (max-width: 768px) {
+      .video-analysis-section {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -228,8 +285,25 @@
   </div>
 
   <div id="resultsSection" style="display: none;" class="results-container">
-    <h2>📊 Analysis Results</h2>
-    <div id="summaryContent" class="summary-text"></div>
+    <div class="video-analysis-section">
+      <div class="video-player-container">
+        <h3 style="color: #fff; margin-bottom: 10px;">Video Playback</h3>
+        <video id="analyzedVideo" controls></video>
+      </div>
+      
+      <div class="frame-analysis-container">
+        <h3>Frame Analysis</h3>
+        <div class="frame-time" id="frameTime">0:00</div>
+        <div id="frameAnalysis" class="frame-analysis-text no-frame-data">
+          Drag the video timeline to see analysis for that moment...
+        </div>
+      </div>
+    </div>
+
+    <div class="holistic-section">
+      <h2>Overall Game Analysis</h2>
+      <div id="summaryContent" class="summary-text"></div>
+    </div>
   </div>
 
   <script>
@@ -240,8 +314,13 @@
     const confirmationMsg = document.getElementById('confirmationMsg');
     const resultsSection = document.getElementById('resultsSection');
     const summaryContent = document.getElementById('summaryContent');
+    const analyzedVideo = document.getElementById('analyzedVideo');
+    const frameAnalysis = document.getElementById('frameAnalysis');
+    const frameTime = document.getElementById('frameTime');
 
     let selectedVideoFile = null;
+    let frameData = [];
+    let videoBlob = null;
 
     input.addEventListener('change', (event) => {
       const file = event.target.files[0];
@@ -252,6 +331,7 @@
         const fileURL = URL.createObjectURL(file);
         videoPreview.src = fileURL;
         videoPreview.hidden = false;
+        videoBlob = fileURL;
 
         videoPreview.addEventListener('loadedmetadata', () => {
           videoPreview.pause();
@@ -270,17 +350,15 @@
     confirmBtn.addEventListener('click', async () => {
       if (!selectedVideoFile) {
         confirmationMsg.style.color = '#f00';
-        confirmationMsg.textContent = '❌ Please select a video first';
+        confirmationMsg.textContent = 'Please select a video first';
         return;
       }
 
-      // Disable button and show loading
       confirmBtn.disabled = true;
       confirmationMsg.style.color = '#0ff';
-      confirmationMsg.innerHTML = '<span class="loading">⏳ Uploading and analyzing video... This may take a few minutes...</span>';
+      confirmationMsg.innerHTML = '<span class="loading">Uploading and analyzing video... This may take a few minutes...</span>';
       resultsSection.style.display = 'none';
 
-      // Create form data
       const formData = new FormData();
       formData.append('video', selectedVideoFile);
 
@@ -296,26 +374,67 @@
 
         const data = await response.json();
 
-        // Show success message
         confirmationMsg.style.color = '#0f0';
-        confirmationMsg.textContent = '✅ Analysis complete!';
+        confirmationMsg.textContent = 'Analysis complete!';
 
-        // Display results
+        // Store frame data
+        frameData = data.frames;
         summaryContent.textContent = data.summary;
+        
+        // Set up analyzed video
+        analyzedVideo.src = videoBlob;
         resultsSection.style.display = 'block';
 
-        // Log frame data for debugging
         console.log('Frame reports:', data.frames);
         console.log('Summary:', data.summary);
 
       } catch (error) {
         confirmationMsg.style.color = '#f00';
-        confirmationMsg.textContent = `❌ Error: ${error.message}`;
+        confirmationMsg.textContent = `Error: ${error.message}`;
         console.error('Upload error:', error);
       } finally {
         confirmBtn.disabled = false;
       }
     });
+
+    // Update frame analysis as video plays or when user scrubs
+    analyzedVideo.addEventListener('timeupdate', updateFrameAnalysis);
+    analyzedVideo.addEventListener('seeked', updateFrameAnalysis);
+
+    function updateFrameAnalysis() {
+      if (frameData.length === 0) return;
+
+      const currentTime = analyzedVideo.currentTime;
+      const fps = 30; // Assuming 30 FPS
+      const currentFrameNumber = Math.floor(currentTime * fps);
+
+      // Format time display
+      const minutes = Math.floor(currentTime / 60);
+      const seconds = Math.floor(currentTime % 60);
+      frameTime.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+      // Find the closest analyzed frame
+      let closestFrame = frameData.reduce((prev, curr) => {
+        const prevDiff = Math.abs(prev.frame_number - currentFrameNumber);
+        const currDiff = Math.abs(curr.frame_number - currentFrameNumber);
+        return currDiff < prevDiff ? curr : prev;
+      });
+
+      // Display the analysis
+      if (closestFrame && closestFrame.analysis) {
+        frameAnalysis.classList.remove('no-frame-data');
+        frameAnalysis.textContent = closestFrame.analysis;
+      } else {
+        frameAnalysis.classList.add('no-frame-data');
+        frameAnalysis.textContent = 'No analysis available for this frame.';
+      }
+    }
+
+    function formatTime(seconds) {
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
   </script>
 </body>
 </html>
