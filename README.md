@@ -4,7 +4,7 @@
 ### Built at **Hack the Valley 2025** by a team of three passionate sports minds:
 
 * 🤺 A fencing official focused on athlete development — [Peter Lian](https://peterlian.com/)  
-* 🏑 A competitive hockey athlete  — [Alex Yuan]
+* 🏑 A competitive hockey athlete  — Alex Yuan
 * 🧊 A lifelong hockey fan  — [Andy Yu](https://www.linkedin.com/in/andy-yu-8083a8339/)  
 
 
