@@ -1,4 +1,3 @@
----
 
 # 🏒 Hockey Tactical Video Analyzer
 
