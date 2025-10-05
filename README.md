@@ -10,7 +10,7 @@
 
 ---
 
-## 🎯 Our Mission
+## Our Goal
 
 Tactical understanding in sports often lags behind physical training — especially for athletes outside of professional systems.
 We built **Hockey Tactical Video Analyzer** to make tactical education more **accessible, visual, and actionable** using AI.
@@ -19,19 +19,19 @@ This tool empowers players and coaches to upload real game footage, receive **fr
 
 ---
 
-## ⚙️ What It Does
+## What It Does
 
 **Hockey Tactical Video Analyzer** is a full-stack AI system that helps players and coaches:
 
-* 🎥 Upload any hockey video
-* 🖼️ Automatically extract key frames
-* 🧠 Analyze player positioning, puck movement, and tactical setups with AI
-* 📊 Generate both per-frame feedback and holistic coaching summaries
-* 🌐 Visualize results through a simple browser interface
+* Upload any hockey video
+* Automatically extract key frames
+* Analyze player positioning, puck movement, and tactical setups with AI
+* Generate both per-frame feedback and holistic coaching summaries
+* Visualize results through a simple browser interface
 
 ---
 
-## 🧩 Tech Stack
+## Tech Stack
 
 | Layer                | Tools & Frameworks                       |
 | -------------------- | ---------------------------------------- |
@@ -43,9 +43,9 @@ This tool empowers players and coaches to upload real game footage, receive **fr
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
-### 📦 Requirements
+### Requirements
 
 Make sure you have Python 3.9+ installed, then run:
 
@@ -61,7 +61,7 @@ ollama run llava
 
 ---
 
-### 🧠 Backend Setup
+### Backend Setup
 
 Run the Flask server:
 
@@ -73,7 +73,7 @@ This will expose an `/upload` endpoint for video analysis.
 
 ---
 
-### 🌐 Frontend Setup
+### Frontend Setup
 
 Simply open `index.html` in your browser.
 
@@ -84,7 +84,7 @@ Simply open `index.html` in your browser.
 
 ---
 
-## 🗂️ Project Structure
+## Project Structure
 
 ```
 hockey-analyzer/
@@ -100,7 +100,7 @@ hockey-analyzer/
 
 ---
 
-## 🧠 How It Works
+## How It Works
 
 1. The user uploads a hockey video from the frontend
 2. Flask backend saves it and runs `full_pipeline.py`
@@ -111,22 +111,22 @@ hockey-analyzer/
 
 ---
 
-## 🏗️ Next Steps
+## Next Steps
 
-* 🏷️ Add section tagging (Breakout, Zone Entry, Scoring Chance)
-* 🎛️ Build an interactive feedback viewer UI
-* ☁️ Deploy as a full web app for coaches and teams
-* 📈 Expand to multi-sport tactical models
+* Add section tagging (Breakout, Zone Entry, Scoring Chance)
+* Build an interactive feedback viewer UI
+* Deploy as a full web app for coaches and teams
+* Expand to multi-sport tactical models
 
 ---
 
-## 📜 License
+## License
 
 MIT License — free to use, modify, and share.
 
 ---
 
-## 🙌 Acknowledgments
+## Acknowledgments
 
 Special thanks to **Hack the Valley 2025** for hosting an inspiring event, and to the open-source community behind **Flask**, **OpenCV**, and **Ollama** for making rapid AI prototyping possible.
 
