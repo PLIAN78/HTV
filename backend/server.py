@@ -13,7 +13,7 @@ CORS(app)  # Enable CORS for frontend communication
 # Configuration
 UPLOAD_FOLDER = "uploads"
 FRAMES_DIR = "frames"
-FRAME_INTERVAL = 30  # Extract every 30th frame (~1 per second at 30fps)
+FRAME_INTERVAL = 60  # Extract every 60th frame (~1 per 2 seconds at 30fps)
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 os.makedirs(FRAMES_DIR, exist_ok=True)
 
@@ -94,16 +94,59 @@ def analyze_frames(saved_frames):
         with open(path, "rb") as f:
             image_b64 = base64.b64encode(f.read()).decode("utf-8")
         
-        prompt = """You are a hockey coach analyzing a single frame from a game clip.
-Describe what you see in terms of player positioning, puck location, and tactical setup.
-Use clear, coaching-style language."""
+        # First pass: Check if frame is worth analyzing
+        screening_prompt = """Is there active play happening in this hockey frame? Answer ONLY 'YES' or 'NO'.
+
+YES if: Puck is in motion, players are in offensive/defensive positions, play is developing
+NO if: Stoppage, face-off setup, players standing around, whistled dead, unclear action"""
         
         try:
+            # Screen the frame first
+            screen_response = requests.post(
+                "http://localhost:11434/api/generate",
+                json={
+                    "model": "llava",
+                    "prompt": screening_prompt,
+                    "images": [image_b64],
+                    "stream": False
+                },
+                timeout=30
+            )
+            
+            screen_result = screen_response.json().get("response", "").strip().upper()
+            
+            # Skip if not worth analyzing
+            if "NO" in screen_result or screen_result == "NO":
+                print(f"Skipped {filename} - no active play")
+                continue
+            
+            # Full analysis for active frames
+            analysis_prompt = """Analyze this hockey play with HIGH IQ tactical insights. Focus on WHY, not just WHAT.
+
+PUCK CARRIER: [Position + ice location]
+
+DECISION ANALYSIS:
+• Why this is the RIGHT or WRONG moment for: [pass/shoot/hold]
+• Mistake being made: [If any, be specific]
+• Best tactical option: [What and WHY it works]
+
+SUPPORT PLAYERS:
+• Who's open and WHY they're open: [Space created how?]
+• Who's NOT in position: [Name gap and consequence]
+
+DEFENSIVE READ:
+• Coverage breakdown: [Who's unsupported and why it matters]
+• Pinch opportunity: [Yes/No + tactical reasoning]
+
+HOCKEY IQ INSIGHT: [One key tactical concept this frame teaches]
+
+Be brutally honest. If nothing special is happening, say "Routine play - no key decisions." Keep under 150 words."""
+
             response = requests.post(
                 "http://localhost:11434/api/generate",
                 json={
                     "model": "llava",
-                    "prompt": prompt,
+                    "prompt": analysis_prompt,
                     "images": [image_b64],
                     "stream": True
                 },
@@ -133,11 +176,6 @@ Use clear, coaching-style language."""
         
         except Exception as e:
             print(f"Error analyzing {filename}: {e}")
-            frame_reports.append({
-                "frame": filename,
-                "frame_number": 0,
-                "analysis": f"Error: {str(e)}"
-            })
     
     return frame_reports
 
@@ -151,11 +189,27 @@ def generate_holistic_analysis(saved_frames):
         with open(path, "rb") as f:
             image_b64_list.append(base64.b64encode(f.read()).decode("utf-8"))
     
-    holistic_prompt = """You are an expert hockey coach analyzing this entire sequence of key frames from a game clip.
-Identify the overall offensive and defensive patterns, player positioning, transition play, and decision-making for both teams.
-Then deliver:
-1) A concise 'Game Flow Summary' (3-4 sentences) that captures the clip's main tactical themes.
-2) 'Actionable Coaching Points' as bullet points, divided by team, with clear, specific suggestions."""
+    holistic_prompt = """Analyze this hockey sequence from a player/coach perspective. Format:
+
+SEQUENCE SUMMARY:
+[2-3 sentences: What offensive/defensive pattern developed and key transitions]
+
+KEY PLAYS & DECISIONS:
+• [Highlight best offensive play made]
+• [Highlight biggest missed opportunity]
+• [Highlight best defensive play made]
+
+OFFENSIVE TEAM IMPROVEMENTS:
+• Puck carrier decisions: [Specific advice]
+• Support positioning: [Where teammates should be]
+• Breakout/entry execution: [What to improve]
+
+DEFENSIVE TEAM IMPROVEMENTS:
+• Coverage assignments: [Who should cover differently]
+• Gap control: [Pinching vs holding back decisions]
+• Transition defense: [How to prevent rush]
+
+Focus on specific, actionable coaching points based on what actually happened in these frames."""
     
     try:
         response = requests.post(

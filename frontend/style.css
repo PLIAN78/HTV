@@ -59,7 +59,7 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  z-index: 0;
+  z-index: 0; /* Reduced from 0 to ensure it stays behind content */
   background-image: radial-gradient(
       circle at 50% 30%,
       transparent 0,
@@ -99,7 +99,7 @@ body::after {
   height: clamp(28px, 4vw, 52px);
   border-radius: 50%;
   pointer-events: none;
-  z-index: 5;
+  z-index: 1; /* Reduced from 5 to ensure it stays behind content */
   background: radial-gradient(ellipse 40% 25% at 35% 20%, rgba(255, 255, 255, 0.35) 0%, transparent 60%),
     radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.15) 0 30%, transparent 50%),
     radial-gradient(ellipse 50% 30% at 65% 75%, rgba(0, 0, 0, 0.5) 0 50%, transparent 70%),
@@ -162,7 +162,7 @@ html::before {
   width: clamp(200px, 25vw, 400px);
   height: clamp(200px, 25vw, 400px);
   pointer-events: none;
-  z-index: 0;
+  z-index: 0; /* Reduced from 0 to ensure it stays behind content */
   background: radial-gradient(
     circle,
     rgba(255, 255, 255, 0.25) 0%,
@@ -238,6 +238,8 @@ html::before {
   margin-bottom: 2rem;
   box-shadow: 0 4px 12px rgba(30, 80, 150, 0.2);
   transition: all 0.3s ease;
+  position: relative;
+  z-index: 10; /* Ensure content stays above background */
 }
 
 .badge:hover {
@@ -257,6 +259,8 @@ html::before {
   line-height: 1.1;
   margin-bottom: 1.5rem;
   text-align: center;
+  position: relative;
+  z-index: 10; /* Ensure content stays above background */
 }
 
 .white-text {
@@ -275,6 +279,8 @@ html::before {
   line-height: 1.6;
   margin-bottom: 3rem;
   text-align: center;
+  position: relative;
+  z-index: 10; /* Ensure content stays above background */
 }
 
 .container {
@@ -286,7 +292,7 @@ html::before {
   width: 100%;
   max-width: 100%;
   position: relative;
-  z-index: 10;
+  z-index: 10; /* Ensure content stays above background */
   backdrop-filter: none;
   border: none;
   transition: none;
@@ -321,6 +327,7 @@ html::before {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   position: relative;
   overflow: visible;
+  z-index: 10; /* Ensure content stays above background */
 }
 
 .upload-btn svg {
@@ -351,6 +358,8 @@ html::before {
   min-height: 0;
   font-weight: 500;
   display: none;
+  position: relative;
+  z-index: 10; /* Ensure content stays above background */
 }
 
 #fileName.show {
@@ -367,6 +376,8 @@ html::before {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   background-color: #000;
   border: 2px solid rgba(30, 80, 150, 0.3);
+  position: relative;
+  z-index: 10; /* Ensure content stays above background */
 }
 
 .confirm-btn {
@@ -385,6 +396,7 @@ html::before {
   box-shadow: 0 4px 16px rgba(0, 255, 136, 0.4);
   position: relative;
   overflow: hidden;
+  z-index: 10; /* Ensure content stays above background */
 }
 
 .confirm-btn::before {
@@ -416,6 +428,8 @@ html::before {
   font-size: 0.95rem;
   font-weight: 600;
   min-height: 1.5rem;
+  position: relative;
+  z-index: 10; /* Ensure content stays above background */
 }
 
 .features {
@@ -425,6 +439,8 @@ html::before {
   align-items: center;
   margin-top: 6rem;
   flex-wrap: wrap;
+  position: relative;
+  z-index: 10; /* Ensure content stays above background */
 }
 
 .feature {
@@ -467,7 +483,7 @@ html::before {
   text-transform: uppercase;
   letter-spacing: 3px;
   font-weight: 600;
-  z-index: 10;
+  z-index: 10; /* Ensure content stays above background */
 }
 
 .skate-trails {
@@ -523,6 +539,21 @@ html::before {
   bottom: 23%;
   left: 37%;
   transform: rotate(-10deg);
+}
+
+.results-container {
+  position: relative;
+  z-index: 10; /* Ensure content stays above background */
+}
+
+.summary-section {
+  position: relative;
+  z-index: 10; /* Ensure content stays above background */
+}
+
+.synced-analysis-section {
+  position: relative;
+  z-index: 10; /* Ensure content stays above background */
 }
 
 @media (max-width: 600px) {

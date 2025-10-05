@@ -159,6 +159,23 @@
       color: #1a1a1a;
       font-size: 0.95rem;
       line-height: 1.6;
+      white-space: pre-wrap;
+      font-family: 'Inter', monospace;
+    }
+
+    .frame-analysis strong {
+      color: #1e5096;
+      font-weight: 700;
+      display: block;
+      margin-top: 0.75rem;
+      margin-bottom: 0.25rem;
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .frame-analysis strong:first-child {
+      margin-top: 0;
     }
 
     .loading-spinner {
@@ -365,7 +382,7 @@
                 <div class="frame-number">Frame ${index + 1}</div>
                 <div class="frame-timestamp">${minutes}:${seconds.toString().padStart(2, '0')}</div>
               </div>
-              <div class="frame-analysis">${frame.analysis}</div>
+              <div class="frame-analysis">${formatAnalysis(frame.analysis)}</div>
             `;
             
             framesTrack.appendChild(frameCard);
@@ -454,6 +471,32 @@
       
       // Initial update
       updateActiveFrame();
+    }
+
+    function formatAnalysis(text) {
+      // Format the analysis text to highlight section headers
+      const sections = [
+        'PUCK:',
+        'KEY DECISION:',
+        'SUPPORT:',
+        'DEFENSE:',
+        'IQ POINT:',
+        'Right move:',
+        'Why:',
+        'Mistake if any:',
+        'Open player:',
+        'Gap:',
+        'Coverage issue:',
+        'Pinch:'
+      ];
+      
+      let formatted = text;
+      sections.forEach(section => {
+        const regex = new RegExp(section, 'gi');
+        formatted = formatted.replace(regex, `<strong>${section}</strong>`);
+      });
+      
+      return formatted;
     }
   </script>
 </body>
