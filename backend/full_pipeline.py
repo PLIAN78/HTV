@@ -3,6 +3,7 @@ import cv2
 import json
 import base64
 import requests
+import shutil   
 
 # === CONFIG ===
 VIDEO_PATH = "input_clip.mp4"  # Replace with your video filename
@@ -112,3 +113,5 @@ for line in response.iter_lines():
 with open(HOLISTIC_REPORT, "w", encoding="utf-8") as out:
     out.write(report.strip())
 print(f"✅ Saved holistic analysis to {HOLISTIC_REPORT}")
+
+shutil.rmtree(FRAMES_DIR)
