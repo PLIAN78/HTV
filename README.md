@@ -1,74 +1,92 @@
-🏒 Hockey Tactical Video Analyzer
-Built at Hack the Valley 2025 by a team of three passionate sports minds:
+---
 
-🏑 A competitive hockey athlete
+# 🏒 Hockey Tactical Video Analyzer
 
-🧊 A lifelong hockey fan
+### Built at **Hack the Valley 2025** by a team of three passionate sports minds:
 
-🤺 A fencing official focused on athlete development
+* 🏑 A competitive hockey athlete
+* 🧊 A lifelong hockey fan
+* 🤺 A fencing official focused on athlete development
 
-🎯 Our Mission
+---
+
+## 🎯 Our Mission
 
 Tactical understanding in sports often lags behind physical training — especially for athletes outside of professional systems.
-We built Hockey Tactical Video Analyzer to make tactical education more accessible, visual, and actionable using AI.
+We built **Hockey Tactical Video Analyzer** to make tactical education more **accessible, visual, and actionable** using AI.
 
-This tool empowers players and coaches to upload real game footage, receive frame-by-frame insights, and generate AI-powered coaching feedback — all in seconds.
+This tool empowers players and coaches to upload real game footage, receive **frame-by-frame insights**, and generate **AI-powered coaching feedback** — all in seconds.
 
-⚙️ What It Does
+---
 
-Hockey Tactical Video Analyzer is a full-stack AI system that helps players and coaches:
+## ⚙️ What It Does
 
-🎥 Upload any hockey video
+**Hockey Tactical Video Analyzer** is a full-stack AI system that helps players and coaches:
 
-🖼️ Automatically extract key frames
+* 🎥 Upload any hockey video
+* 🖼️ Automatically extract key frames
+* 🧠 Analyze player positioning, puck movement, and tactical setups with AI
+* 📊 Generate both per-frame feedback and holistic coaching summaries
+* 🌐 Visualize results through a simple browser interface
 
-🧠 Analyze player positioning, puck movement, and tactical setups with AI
+---
 
-📊 Generate both per-frame feedback and holistic coaching summaries
+## 🧩 Tech Stack
 
-🌐 Visualize results through a simple browser interface
+| Layer                | Tools & Frameworks                       |
+| -------------------- | ---------------------------------------- |
+| **Frontend**         | HTML, CSS, (JavaScript for upload logic) |
+| **Backend**          | Python (Flask, Flask-CORS)               |
+| **AI Engine**        | Ollama + LLaVA (Vision-Language Model)   |
+| **Video Processing** | OpenCV                                   |
+| **Data Output**      | JSON (per-frame) & TXT (summary)         |
 
-🧩 Tech Stack
-Layer	Tools & Frameworks
-Frontend	HTML, CSS, (JavaScript for upload logic)
-Backend	Python (Flask, Flask-CORS)
-AI Engine	Ollama + LLaVA (Vision-Language Model)
-Video Processing	OpenCV
-Data Output	JSON (per-frame) & TXT (summary)
-🚀 Getting Started
-📦 Requirements
+---
+
+## 🚀 Getting Started
+
+### 📦 Requirements
 
 Make sure you have Python 3.9+ installed, then run:
 
+```bash
 pip install opencv-python flask flask-cors
+```
 
+Install and start **Ollama** locally with the **LLaVA** model:
 
-Install and start Ollama locally with the LLaVA model:
-
+```bash
 ollama run llava
+```
 
-🧠 Backend Setup
+---
+
+### 🧠 Backend Setup
 
 Run the Flask server:
 
+```bash
 python backend/server.py
+```
 
+This will expose an `/upload` endpoint for video analysis.
 
-This will expose an /upload endpoint for video analysis.
+---
 
-🌐 Frontend Setup
+### 🌐 Frontend Setup
 
-Simply open index.html in your browser.
+Simply open `index.html` in your browser.
 
-Upload a hockey video
+1. Upload a hockey video
+2. Confirm and process
+3. Watch analysis logs in your console or alert box
+4. Review coaching insights per frame and overall game summary
 
-Confirm and process
+---
 
-Watch analysis logs in your console or alert box
+## 🗂️ Project Structure
 
-Review coaching insights per frame and overall game summary
-
-🗂️ Project Structure
+```
 hockey-analyzer/
 ├── backend/
 │   ├── full_pipeline.py         # Frame extraction + AI analysis
@@ -78,35 +96,38 @@ hockey-analyzer/
 ├── frames/                      # Extracted video frames
 ├── index.html                   # Frontend interface
 ├── style.css                    # Frontend styling
+```
 
-🧠 How It Works
+---
 
-The user uploads a hockey video from the frontend
+## 🧠 How It Works
 
-Flask backend saves it and runs full_pipeline.py
+1. The user uploads a hockey video from the frontend
+2. Flask backend saves it and runs `full_pipeline.py`
+3. Frames are extracted every second using OpenCV
+4. Each frame is analyzed via **LLaVA** to detect tactical elements
+5. The system generates both **per-frame** and **holistic** reports
+6. Results are sent back to the frontend for display
 
-Frames are extracted every second using OpenCV
+---
 
-Each frame is analyzed via LLaVA to detect tactical elements
+## 🏗️ Next Steps
 
-The system generates both per-frame and holistic reports
+* 🏷️ Add section tagging (Breakout, Zone Entry, Scoring Chance)
+* 🎛️ Build an interactive feedback viewer UI
+* ☁️ Deploy as a full web app for coaches and teams
+* 📈 Expand to multi-sport tactical models
 
-Results are sent back to the frontend for display
+---
 
-🏗️ Next Steps
-
-🏷️ Add section tagging (Breakout, Zone Entry, Scoring Chance)
-
-🎛️ Build an interactive feedback viewer UI
-
-☁️ Deploy as a full web app for coaches and teams
-
-📈 Expand to multi-sport tactical models
-
-📜 License
+## 📜 License
 
 MIT License — free to use, modify, and share.
 
-🙌 Acknowledgments
+---
 
-Special thanks to Hack the Valley 2025 for hosting an inspiring event, and to the open-source community behind Flask, OpenCV, and Ollama for making rapid AI prototyping possible.
+## 🙌 Acknowledgments
+
+Special thanks to **Hack the Valley 2025** for hosting an inspiring event, and to the open-source community behind **Flask**, **OpenCV**, and **Ollama** for making rapid AI prototyping possible.
+
+---
