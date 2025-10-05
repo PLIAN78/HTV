@@ -5,7 +5,7 @@
 
 * 🏑 A competitive hockey athlete
 * 🧊 A lifelong hockey fan
-* 🤺 A fencing official focused on athlete development
+* 🤺 A fencing official focused on athlete development — [Peter Lian](https://peterlian.com/)  
 
 ---
 
